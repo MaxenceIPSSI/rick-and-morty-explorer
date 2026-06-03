@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #f4f7fa;
+  color: #1d3557;
+}
+
+a {
+  color: #2a9d8f;
+}
+
+h1,
+h2 {
+  color: #1d3557;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.btn-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #2a9d8f;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+}
