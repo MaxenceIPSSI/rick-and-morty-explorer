@@ -4,6 +4,7 @@ import { AsyncPipe } from '@angular/common';
 import { combineLatest, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { CharacterService } from '../../services/character.service';
+import { CharacterGraphqlService } from '../../services/character-graphql.service';
 import { FavorisService } from '../../services/favoris.service';
 import { ApiResponse } from '../../models/api-response.model';
 import { Character } from '../../models/character.model';
@@ -13,6 +14,8 @@ import { SearchBarComponent } from '../../components/search-bar/search-bar';
 import { PaginatorComponent } from '../../components/paginator/paginator';
 import { LoaderComponent } from '../../components/loader/loader';
 import { ErrorMessageComponent } from '../../components/error-message/error-message';
+
+type Source = 'rest' | 'graphql';
 
 @Component({
   selector: 'app-characters-list',
@@ -29,26 +32,33 @@ import { ErrorMessageComponent } from '../../components/error-message/error-mess
 })
 export class CharactersListComponent {
   private readonly characterService = inject(CharacterService);
+  private readonly characterGql = inject(CharacterGraphqlService);
   protected readonly favoris = inject(FavorisService);
 
   protected readonly name = signal('');
   protected readonly status = signal('');
   protected readonly page = signal(1);
+  protected readonly source = signal<Source>('rest');
 
   protected readonly vm$ = combineLatest([
     toObservable(this.name),
     toObservable(this.status),
     toObservable(this.page),
+    toObservable(this.source),
   ]).pipe(
     debounceTime(300),
     distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
-    switchMap(([name, status, page]) =>
-      this.characterService.getAll(page, name, status).pipe(
+    switchMap(([name, status, page, source]) => {
+      const request$ =
+        source === 'graphql'
+          ? this.characterGql.getAll(page, name, status)
+          : this.characterService.getAll(page, name, status);
+      return request$.pipe(
         map((response) => loaded<ApiResponse<Character>>(response)),
         startWith(loading<ApiResponse<Character>>()),
         catchError(() => of(failed<ApiResponse<Character>>('Aucun personnage trouvé ou erreur réseau.'))),
-      ),
-    ),
+      );
+    }),
   );
 
   onSearch(term: string): void {
@@ -59,6 +69,11 @@ export class CharactersListComponent {
   onStatusChange(event: Event): void {
     this.page.set(1);
     this.status.set((event.target as HTMLSelectElement).value);
+  }
+
+  onSourceChange(value: Source): void {
+    this.page.set(1);
+    this.source.set(value);
   }
 
   prev(): void {

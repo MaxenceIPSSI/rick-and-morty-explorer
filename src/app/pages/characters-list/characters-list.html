@@ -10,6 +10,19 @@
       <option value="dead">Dead</option>
       <option value="unknown">Unknown</option>
     </select>
+
+    <div class="source-toggle">
+      <button type="button" [class.active]="source() === 'rest'" (click)="onSourceChange('rest')">
+        REST
+      </button>
+      <button
+        type="button"
+        [class.active]="source() === 'graphql'"
+        (click)="onSourceChange('graphql')"
+      >
+        GraphQL
+      </button>
+    </div>
   </div>
 
   @if (vm$ | async; as vm) {
@@ -56,5 +69,22 @@
     padding: 0.6rem 0.8rem;
     border: 1px solid #cdd6dd;
     border-radius: 10px;
+  }
+  .source-toggle button {
+    padding: 0.6rem 1rem;
+    border: 1px solid #2a9d8f;
+    background: #fff;
+    color: #2a9d8f;
+    cursor: pointer;
+  }
+  .source-toggle button:first-child {
+    border-radius: 8px 0 0 8px;
+  }
+  .source-toggle button:last-child {
+    border-radius: 0 8px 8px 0;
+  }
+  .source-toggle button.active {
+    background: #2a9d8f;
+    color: #fff;
   }
 </style>
