@@ -1,3 +1,15 @@
+<header class="topbar">
+  <a class="brand" routerLink="/dashboard">🛸 Rick &amp; Morty Explorer</a>
+  <nav>
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/characters" routerLinkActive="active">Personnages</a>
+    <a routerLink="/locations" routerLinkActive="active">Lieux</a>
+    <a routerLink="/episodes" routerLinkActive="active">Épisodes</a>
+    <a routerLink="/favoris" routerLinkActive="active">Favoris ⭐ {{ favoris.nombre() }}</a>
+    <a routerLink="/contact" routerLinkActive="active">Contact</a>
+  </nav>
+</header>
+
 <main class="content">
   <router-outlet />
 </main>

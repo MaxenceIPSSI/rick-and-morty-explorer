@@ -1,0 +1,29 @@
+<section>
+  <h1>Tableau de bord</h1>
+
+  <div class="cards">
+    <a class="stat" routerLink="/characters">
+      <span class="value">{{ totalCharacters() ?? '…' }}</span>
+      <span class="label">Personnages</span>
+    </a>
+    <a class="stat" routerLink="/locations">
+      <span class="value">{{ totalLocations() ?? '…' }}</span>
+      <span class="label">Lieux</span>
+    </a>
+    <a class="stat" routerLink="/episodes">
+      <span class="value">{{ totalEpisodes() ?? '…' }}</span>
+      <span class="label">Épisodes</span>
+    </a>
+    <a class="stat highlight" routerLink="/favoris">
+      <span class="value">{{ favoris.nombre() }}</span>
+      <span class="label">Favoris</span>
+    </a>
+  </div>
+
+  <h2>Répartition des favoris par statut</h2>
+  <div class="repartition">
+    <div class="bar alive">🟢 Vivant : {{ repartition().alive }}</div>
+    <div class="bar dead">🔴 Mort : {{ repartition().dead }}</div>
+    <div class="bar unknown">⚪ Inconnu : {{ repartition().unknown }}</div>
+  </div>
+</section>

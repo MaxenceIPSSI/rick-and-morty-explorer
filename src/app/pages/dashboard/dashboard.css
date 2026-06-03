@@ -1,0 +1,54 @@
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  color: #1d3557;
+}
+
+.stat .value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2a9d8f;
+}
+
+.stat .label {
+  color: #6b7b8a;
+  font-weight: 600;
+}
+
+.stat.highlight {
+  background: #2a9d8f;
+}
+
+.stat.highlight .value,
+.stat.highlight .label {
+  color: #fff;
+}
+
+.repartition {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.bar {
+  flex: 1;
+  min-width: 160px;
+  padding: 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}

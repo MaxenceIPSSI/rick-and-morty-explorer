@@ -1,0 +1,58 @@
+.detail {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.head {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.head img {
+  width: 200px;
+  border-radius: 12px;
+}
+
+.status {
+  font-weight: 600;
+}
+
+.fav {
+  margin-top: 0.75rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #2a9d8f;
+  background: #fff;
+  color: #2a9d8f;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.relations {
+  margin-top: 1.5rem;
+  border-top: 1px solid #eef2f6;
+  padding-top: 1rem;
+}
+
+.episodes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.episode {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  background: #f4f7fa;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #1d3557;
+}
+
+.episode:hover {
+  background: #e6eef5;
+}

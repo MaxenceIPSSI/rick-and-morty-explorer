@@ -1,0 +1,30 @@
+@if (vm$ | async; as vm) {
+  @if (vm.loading) {
+    <app-loader />
+  } @else if (vm.error) {
+    <app-error-message [message]="vm.error" (retry)="retry()" />
+  } @else {
+    @if (vm.data; as d) {
+      <article class="detail">
+        <span class="code">{{ d.episode.episode }}</span>
+        <h1>{{ d.episode.name }}</h1>
+        <p><strong>Diffusion :</strong> {{ d.episode.air_date }}</p>
+
+        <section class="characters">
+          <h2>Personnages ({{ d.characters.length }})</h2>
+          <div class="grid">
+            @for (character of d.characters; track character.id) {
+              <a class="character" [routerLink]="['/characters', character.id]">
+                <img [src]="character.image" [alt]="character.name" />
+                <span class="name">{{ character.name }}</span>
+                <span class="status">{{ character.status | status }}</span>
+              </a>
+            } @empty {
+              <p>Aucun personnage.</p>
+            }
+          </div>
+        </section>
+      </article>
+    }
+  }
+}

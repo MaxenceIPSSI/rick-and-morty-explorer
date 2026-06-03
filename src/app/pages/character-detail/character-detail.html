@@ -1,0 +1,60 @@
+@if (vm$ | async; as vm) {
+  @if (vm.loading) {
+    <app-loader />
+  } @else if (vm.error) {
+    <app-error-message [message]="vm.error" (retry)="retry()" />
+  } @else {
+    @if (vm.data; as d) {
+      <article class="detail">
+        <div class="head">
+          <img [src]="d.character.image" [alt]="d.character.name" />
+          <div>
+            <h1>{{ d.character.name }}</h1>
+            <p class="status">{{ d.character.status | status }} — {{ d.character.species }}</p>
+            <p>Genre : {{ d.character.gender }}</p>
+            @if (d.character.type) {
+              <p>Type : {{ d.character.type }}</p>
+            }
+            <button type="button" class="fav" (click)="toggleFavori(d.character)">
+              {{ favoris.isFavori(d.character.id) ? '⭐ Retirer des favoris' : '☆ Ajouter aux favoris' }}
+            </button>
+          </div>
+        </div>
+
+        <section class="relations">
+          <h2>Lieux</h2>
+          <ul>
+            <li>
+              <strong>Origine :</strong>
+              @if (d.originId) {
+                <a [routerLink]="['/locations', d.originId]">{{ d.character.origin.name }}</a>
+              } @else {
+                <span>{{ d.character.origin.name }}</span>
+              }
+            </li>
+            <li>
+              <strong>Lieu actuel :</strong>
+              @if (d.locationId) {
+                <a [routerLink]="['/locations', d.locationId]">{{ d.character.location.name }}</a>
+              } @else {
+                <span>{{ d.character.location.name }}</span>
+              }
+            </li>
+          </ul>
+        </section>
+
+        <section class="relations">
+          <h2>Épisodes ({{ d.episodes.length }})</h2>
+          <div class="episodes">
+            @for (episode of d.episodes; track episode.id) {
+              <a class="episode" [routerLink]="['/episodes', episode.id]">
+                <strong>{{ episode.episode }}</strong>
+                <span>{{ episode.name }}</span>
+              </a>
+            }
+          </div>
+        </section>
+      </article>
+    }
+  }
+}

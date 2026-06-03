@@ -1,0 +1,60 @@
+<section>
+  <h1>Personnages</h1>
+
+  <div class="toolbar">
+    <app-search-bar (search)="onSearch($event)" />
+
+    <select (change)="onStatusChange($event)" [value]="status()">
+      <option value="">Tous les statuts</option>
+      <option value="alive">Alive</option>
+      <option value="dead">Dead</option>
+      <option value="unknown">Unknown</option>
+    </select>
+  </div>
+
+  @if (vm$ | async; as vm) {
+    @if (vm.loading) {
+      <app-loader />
+    } @else if (vm.error) {
+      <app-error-message [message]="vm.error" (retry)="onSearch(name())" />
+    } @else {
+      @if (vm.data; as data) {
+        <div class="list">
+          @for (character of data.results; track character.id) {
+            <app-character-card
+              [character]="character"
+              [isFavori]="favoris.isFavori(character.id)"
+              (toggleFavori)="toggleFavori($event)"
+            />
+          }
+        </div>
+
+        <app-paginator
+          [currentPage]="page()"
+          [totalPages]="data.info.pages"
+          (prev)="prev()"
+          (next)="next(data.info.pages)"
+        />
+      }
+    }
+  }
+</section>
+
+<style>
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin: 1rem 0 1.5rem;
+  }
+  .toolbar app-search-bar {
+    flex: 1;
+    min-width: 220px;
+  }
+  select {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #cdd6dd;
+    border-radius: 10px;
+  }
+</style>

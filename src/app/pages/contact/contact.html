@@ -1,0 +1,53 @@
+<section class="contact">
+  <h1>Contact</h1>
+
+  @if (submitted()) {
+    <p class="success">✅ Votre message a bien été envoyé. Merci !</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <label>
+      Nom
+      <input type="text" formControlName="nom" />
+    </label>
+    @if (nom.touched && nom.invalid) {
+      <p class="error">
+        @if (nom.errors?.['required']) {
+          Le nom est requis.
+        } @else if (nom.errors?.['minlength']) {
+          Le nom doit contenir au moins 3 caractères.
+        }
+      </p>
+    }
+
+    <label>
+      Email
+      <input type="email" formControlName="email" />
+    </label>
+    @if (email.touched && email.invalid) {
+      <p class="error">
+        @if (email.errors?.['required']) {
+          L'email est requis.
+        } @else if (email.errors?.['email']) {
+          L'email n'est pas valide.
+        }
+      </p>
+    }
+
+    <label>
+      Message
+      <textarea formControlName="message" rows="5"></textarea>
+    </label>
+    @if (message.touched && message.invalid) {
+      <p class="error">
+        @if (message.errors?.['required']) {
+          Le message est requis.
+        } @else if (message.errors?.['minlength']) {
+          Le message doit contenir au moins 10 caractères.
+        }
+      </p>
+    }
+
+    <button type="submit" [disabled]="form.invalid">Envoyer</button>
+  </form>
+</section>

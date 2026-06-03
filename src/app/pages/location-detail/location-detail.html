@@ -1,0 +1,30 @@
+@if (vm$ | async; as vm) {
+  @if (vm.loading) {
+    <app-loader />
+  } @else if (vm.error) {
+    <app-error-message [message]="vm.error" (retry)="retry()" />
+  } @else {
+    @if (vm.data; as d) {
+      <article class="detail">
+        <h1>{{ d.location.name }}</h1>
+        <p><strong>Type :</strong> {{ d.location.type }}</p>
+        <p><strong>Dimension :</strong> {{ d.location.dimension }}</p>
+
+        <section class="residents">
+          <h2>Résidents ({{ d.residents.length }})</h2>
+          <div class="grid">
+            @for (resident of d.residents; track resident.id) {
+              <a class="resident" [routerLink]="['/characters', resident.id]">
+                <img [src]="resident.image" [alt]="resident.name" />
+                <span class="name">{{ resident.name }}</span>
+                <span class="status">{{ resident.status | status }}</span>
+              </a>
+            } @empty {
+              <p>Aucun résident connu.</p>
+            }
+          </div>
+        </section>
+      </article>
+    }
+  }
+}

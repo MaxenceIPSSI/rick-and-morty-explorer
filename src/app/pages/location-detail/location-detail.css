@@ -1,0 +1,38 @@
+.detail {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.residents {
+  margin-top: 1.5rem;
+  border-top: 1px solid #eef2f6;
+  padding-top: 1rem;
+}
+
+.resident {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  color: #1d3557;
+}
+
+.resident img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.resident .name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.resident .status {
+  font-size: 0.85rem;
+}

@@ -1,0 +1,55 @@
+<section>
+  <h1>Lieux</h1>
+
+  @if (vm$ | async; as vm) {
+    @if (vm.loading) {
+      <app-loader />
+    } @else if (vm.error) {
+      <app-error-message [message]="vm.error" (retry)="reload()" />
+    } @else {
+      @if (vm.data; as data) {
+        <div class="list">
+          @for (location of data.results; track location.id) {
+            <a class="loc-card" [routerLink]="['/locations', location.id]">
+              <h3>{{ location.name }}</h3>
+              <p>{{ location.type }}</p>
+              <p class="dim">{{ location.dimension }}</p>
+              <p class="count">{{ location.residents.length }} résident(s)</p>
+            </a>
+          }
+        </div>
+
+        <app-paginator
+          [currentPage]="page()"
+          [totalPages]="data.info.pages"
+          (prev)="prev()"
+          (next)="next(data.info.pages)"
+        />
+      }
+    }
+  }
+</section>
+
+<style>
+  .loc-card {
+    display: block;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    text-decoration: none;
+    color: #1d3557;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  .loc-card h3 {
+    margin: 0 0 0.4rem;
+  }
+  .loc-card p {
+    margin: 0.15rem 0;
+    color: #6b7b8a;
+  }
+  .loc-card .count {
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: #2a9d8f;
+  }
+</style>

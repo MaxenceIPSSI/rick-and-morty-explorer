@@ -1,0 +1,63 @@
+<section>
+  <h1>Épisodes</h1>
+
+  @if (vm$ | async; as vm) {
+    @if (vm.loading) {
+      <app-loader />
+    } @else if (vm.error) {
+      <app-error-message [message]="vm.error" (retry)="reload()" />
+    } @else {
+      @if (vm.data; as data) {
+        <div class="list">
+          @for (episode of data.results; track episode.id) {
+            <a class="ep-card" [routerLink]="['/episodes', episode.id]">
+              <span class="code">{{ episode.episode }}</span>
+              <h3>{{ episode.name }}</h3>
+              <p>{{ episode.air_date }}</p>
+              <p class="count">{{ episode.characters.length }} personnage(s)</p>
+            </a>
+          }
+        </div>
+
+        <app-paginator
+          [currentPage]="page()"
+          [totalPages]="data.info.pages"
+          (prev)="prev()"
+          (next)="next(data.info.pages)"
+        />
+      }
+    }
+  }
+</section>
+
+<style>
+  .ep-card {
+    display: block;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    text-decoration: none;
+    color: #1d3557;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  .ep-card .code {
+    display: inline-block;
+    background: #2a9d8f;
+    color: #fff;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .ep-card h3 {
+    margin: 0.5rem 0 0.3rem;
+  }
+  .ep-card p {
+    margin: 0.15rem 0;
+    color: #6b7b8a;
+  }
+  .ep-card .count {
+    color: #2a9d8f;
+    font-weight: 600;
+  }
+</style>
